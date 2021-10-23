@@ -34,11 +34,11 @@ This is the front end for the collaborative project on Can of Books. It was buil
 ## Estimates
 
 LAB11
-Name of feature: ________________________________
+Name of feature: 
 
 Estimate of time needed to complete: _____
 
-Start time: _____
+Start time: 3:10p
 
 Finish time: _____
 
