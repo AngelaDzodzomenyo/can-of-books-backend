@@ -9,6 +9,7 @@ const mongoose = require('mongoose');
 app.use(cors());
 const bookModel = require('./modules/book');
 const seed = require('./modules/seed.js');
+const { response } = require('express');
 const db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'conection error: '));
@@ -28,7 +29,11 @@ app.get('/test', (request, response) => {
 
 app.get('/seed', seed);
 
-app.get('/book', bookModel);
+app.get('/book', async (req,res) => {
+  let books = await bookModel.find({})  //<---get me everything in this collection. Theres something here, we need you to return it
+  console.log(books)
+  res.send(books)
+});
 
 
 

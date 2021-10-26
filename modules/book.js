@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 require('dotenv').config();
 
-// const { Schema } = mongoose;
+
 
 const bookSchema = new mongoose.Schema({
   title: { type: String },
