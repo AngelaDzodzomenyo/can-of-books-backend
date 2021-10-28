@@ -29,12 +29,37 @@ app.get('/test', (request, response) => {
 
 app.get('/seed', seed);
 
-app.get('/book', async (req,res) => {
+app.get('/book', async (req, res) => {
   let books = await bookModel.find({})  //<---get me everything in this collection. Theres something here, we need you to return it
   console.log(books)
   res.send(books)
 });
 
+app.post('/books/:info', (request, response) => {
+  try {
+    const bookInfo = request.body;
+    // const newBook = bookModel(bookInfo);
+    bookInfo.save();
+    response.status(200).send('bookInfo');
+  } catch (error) {
+    response.status(500).send('You are unable to post a book', error.message);
+  }
+});
+
+// app.post('/books', async (request, response) => {
+//   try {
+//     const bookInfo = request.body;
+//     const newBook = await bookModel.create ({
+//       title: bookInfo.title,
+//       description: bookInfo.description,
+//       status:true,
+//       email: bookInfo.email
+//     });
+//     response.status(201).send(newBook)
+//   } catch(error) {
+//     response.status(500).send('You are unable to post a book')
+//   }
+// });
 
 
 app.get('/test', (request, response) => {
