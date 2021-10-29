@@ -17,7 +17,7 @@ db.on('error', console.error.bind(console, 'conection error: '));
 
 db.once('open', () => console.log('mongo database is connected!'));
 
-mongoose.connect('mongodb://localhost:27017/Book',
+mongoose.connect(`${process.env.MONGO_DATABASE_CONNECTION}Book`,
   { useNewUrlParser: true, useUnifiedTopology: true }
 );
 
