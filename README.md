@@ -1,9 +1,11 @@
+# Can of Books API
 
-------
-# Can of Books
-
-**Author**: Angela Dzodzomenyno & Chris Reichert
-**Version**: 1.0.0 (increment the patch/fix version number if you make more commits past your first submission)
+**Author**: Angela Dzodzomenyo & Chris Reichert
+**Version**: 
+1.0.0 Initial Build Out
+1.1.0 Added database storage
+1.1.5 created book modal and deployed
+1.2.0 added user ability to post and delete
 
 ## Overview
 This is the front end for the collaborative project on Can of Books. It was built off a template from ([Code Fellows](https://github.com/codefellows/can-of-books-frontend-template).
@@ -13,15 +15,17 @@ This is the front end for the collaborative project on Can of Books. It was buil
 <!-- What are the steps that a user must take in order to build this app on their own machine and get it running? -->
 
 ## Architecture
-* React
-* React-router-dom
-* React-bootstrap
-* Bootstrap
+* Node.js
+* express.js
+* mongoDB
+* Mongoose
+* CORS
 * Axios
+* dotenv
 * ([Front-End Repository](https://github.com/reichertc2/can-of-books)
-* ([Front-End Deployed Site]()
-* ([Back-End Repository]()
-* ([Back-End Deployed Site]()
+* ([Front-End Deployed Site](https://reichertc2-can-of-books.netlify.app/)
+* ([Back-End Repository](https://github.com/AngelaDzodzomenyo/can-of-books-backend.git)
+* ([Back-End Deployed Site](https://can-of-books-backend01.herokuapp.com/)
 * ([Trello Board](https://trello.com/c/cRVgbD8L/5-1-set-up-your-repositories))
 <!-- Provide a detailed description of the application design. What technologies (languages, libraries, etc) you're using, and any other relevant design information. -->
 
@@ -33,24 +37,15 @@ This is the front end for the collaborative project on Can of Books. It was buil
 
 ## Estimates
 
-LAB11
-Name of feature: 
-
-Estimate of time needed to complete: _____
-
-Start time: 3:10p
-
-Finish time: _____
-
-Actual time needed to complete: _____
+(See Below)
 
 
 ## Credit and Collaborations
 <!-- Give credit (and a link) to other people or resources that helped you build this application. -->
 
-## Collabration Agreement
+## Collaboration Agreement
 
-### Logistiacal
+### Logistical
 * What hours will you be available to communicate?
     * afternoon/evenings a couple hours before class. 
 * What platform will you use to communicate (ie. Slack, phone …)?
@@ -62,7 +57,7 @@ Actual time needed to complete: _____
 ### Cooperative
 * Make a list of each parson’s strengths.
     * Chris - across the board strong. Understand concepts
-    * Angela - understands backend pretty well. 
+    * Angela - understands back-end pretty well. 
 * How can you best utilize these strengths in the development of your application?
     * We can bounce ideas off of each other. 
 * In what areas do you each want to develop greater strength?
@@ -82,16 +77,26 @@ Actual time needed to complete: _____
 
 1. Name of feature: Set up your repositories
 * Estimate of time needed to complete: 45 minutes
-<!-- * Start time: 2230
+* Start time: 2230
 * Finish time: 2335
-* Actual time needed to complete: 1 hour 5 minutes -->
+* Actual time needed to complete: 1 hour 5 minutes
 1. Name of feature:  Storage: As a user, I'd like my books to persist, so that whenever I make changes, I can see the my full list of best books.
-<!-- * Estimate of time needed to complete: 45 minutes
+* Estimate of time needed to complete: 1 hours
 * Start time: 2230
-* Finish time: 2335
-* Actual time needed to complete: 1 hour 5 minutes -->
+* Finish time: 0030
+* Actual time needed to complete: 2 hours
 1. Name of feature: Book Component: As a user, I'd like to see my list of books, so that I can track what's impacted me, and what's recommended to me.
-<!-- * Estimate of time needed to complete: 45 minutes
-* Start time: 2230
-* Finish time: 2335
-* Actual time needed to complete: 1 hour 5 minutes -->
+* Estimate of time needed to complete: 3 hours
+* Start time: 1800 2230 1400
+* Finish time: 2000 2330 1700
+* Actual time needed to complete: 6 hours 
+1. Name of feature: Create: As a user, I'd like to add a new book to my shelf, so that I can keep my lists up to date with my latest books and recommendations.
+* Estimate of time needed to complete: 4 hours
+* Start time: 1800 2230 2030 1400
+* Finish time: 2000 2330 0030 1700
+* Actual time needed to complete: 10 hours
+1. Name of feature: Delete: As a user, I want to remove books from my list, so that only the most important books are on my shelf.
+* Estimate of time needed to complete: 2 hours
+* Start time: 2230 2030 1400
+* Finish time: 2330 0030 1700
+* Actual time needed to complete: 8 hours
