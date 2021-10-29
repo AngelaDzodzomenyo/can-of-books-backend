@@ -6,7 +6,7 @@ require('dotenv').config();
 const bookSchema = new mongoose.Schema({
   title: { type: String },
   description: { type: String },
-  status: { type: Boolean },
+  status: { type: String },
   email: { type: String }
 });
 

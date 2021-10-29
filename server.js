@@ -17,7 +17,7 @@ db.on('error', console.error.bind(console, 'conection error: '));
 
 db.once('open', () => console.log('mongo database is connected!'));
 
-mongoose.connect('mongodb://localhost:27017/Book',
+mongoose.connect(process.env.MONGO_DATABASE_CONNECTION,
 // ${process.env.MONGO_DATABASE_CONNECTION}
   { useNewUrlParser: true, useUnifiedTopology: true }
 );
@@ -47,6 +47,22 @@ app.post('/books', async (request,response) => {
     response.status(400).send('Book not created')
   }
 })
+
+app.delete('/books/:id', async (request, response) => {
+  // let email = request.query.email
+  let id = request.params.id
+  try {
+    // const book = await bookModel.findOne({_id:id, email})
+    // if (book.email !== email){
+    //   response.status(400).send('Unauthorized to delete book.');
+    //   return;
+    // }
+    await bookModel.findByIdAndDelete(id);
+    response.send('Book deleted!')
+  } catch(error) {
+    response.status(400).send('Unable to delete book.')
+  }
+} )
 
 
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
