@@ -22,7 +22,10 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'conection error: '));
 db.once('open', () => console.log('mongo database is connected!'));
 
-mongoose.connect(`${process.env.MONGO_DATABASE_CONNECTION}Book`,
+
+mongoose.connect(process.env.MONGO_DATABASE_CONNECTION,
+// ${process.env.MONGO_DATABASE_CONNECTION}
+
   { useNewUrlParser: true, useUnifiedTopology: true }
 );
 
@@ -64,21 +67,23 @@ app.post('/books', async (request, response) => {
   }
 })
 
-app.delete('/books', async (req, res) => {
-  let { id } = req.params;
-  console.log(id);
+app.delete('/books/:id', async (request, response) => {
+  // let email = request.query.email
+  let id = request.params.id
   try {
-    let deletedObj = await bookModel.findByIdAndDelete(id);
-    res.status(200).send(deletedObj);
+    // const book = await bookModel.findOne({_id:id, email})
+    // if (book.email !== email){
+    //   response.status(400).send('Unauthorized to delete book.');
+    //   return;
+    // }
+    await bookModel.findByIdAndDelete(id);
+    response.send('Book deleted!')
+  } catch(error) {
+    response.status(400).send('Unable to delete book.')
   }
-  catch (error) {
-    res.status(500).send('error deleting book', error.message);
-  }
-})
+} )
 
-app.get('*', (request, response) => {
-  response.status(500).send('Page not found');
-})
+
 
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
 
