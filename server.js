@@ -14,17 +14,18 @@ const PORT = process.env.PORT || 3001;
 
 const mongoose = require('mongoose');
 
-const bookModel = require('./modules/book');
+
+const bookModel = require('./modules/book.js');
 const seed = require('./modules/seed.js');
+
 // const { response } = require('express');
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'conection error: '));
 db.once('open', () => console.log('mongo database is connected!'));
 
-
 mongoose.connect(process.env.MONGO_DATABASE_CONNECTION,
-// ${process.env.MONGO_DATABASE_CONNECTION}
+  // ${process.env.MONGO_DATABASE_CONNECTION}
 
   { useNewUrlParser: true, useUnifiedTopology: true }
 );
@@ -38,7 +39,11 @@ app.get('/test', (request, response) => {
 
 app.get('/seed', seed);
 
-app.get('/books', async (req, res) => {
+app.get('/books', getBook);
+app.post('/books', postBook);
+app.delete('/books/:id', deleteBook)
+
+async function getBook(req, res) {
   try {
     let bookRequest = {};
     if (req.query.status) {
@@ -51,9 +56,9 @@ app.get('/books', async (req, res) => {
   catch (error) {
     res.status(500).send('cannot locate books form DB', error.message)
   }
-});
+}
 
-app.post('/books', async (request, response) => {
+async function postBook(request, response) {
   try {
     const bookInfo = request.body;
     // console.log('bookInfo ', bookInfo);
@@ -65,24 +70,17 @@ app.post('/books', async (request, response) => {
     console.log('error: ', error.message);
     response.status(400).send('Book not created')
   }
-})
+}
 
-app.delete('/books/:id', async (request, response) => {
-  // let email = request.query.email
+async function deleteBook(request, response) {
   let id = request.params.id
   try {
-    // const book = await bookModel.findOne({_id:id, email})
-    // if (book.email !== email){
-    //   response.status(400).send('Unauthorized to delete book.');
-    //   return;
-    // }
     await bookModel.findByIdAndDelete(id);
     response.send('Book deleted!')
-  } catch(error) {
+  } catch (error) {
     response.status(400).send('Unable to delete book.')
   }
-} )
-
+}
 
 
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
