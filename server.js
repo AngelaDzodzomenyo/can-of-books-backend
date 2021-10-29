@@ -1,24 +1,31 @@
 'use strict';
 
 require('dotenv').config();
+
 const express = require('express');
-const cors = require('cors');
-const PORT = process.env.PORT || 3001;
 const app = express();
-const mongoose = require('mongoose');
-app.use(cors());
-const bookModel = require('./modules/book');
-const seed = require('./modules/seed.js');
-const { response } = require('express');
-const db = mongoose.connection;
 app.use(express.json());
 
-db.on('error', console.error.bind(console, 'conection error: '));
 
+const cors = require('cors');
+app.use(cors());
+
+const PORT = process.env.PORT || 3001;
+
+const mongoose = require('mongoose');
+
+const bookModel = require('./modules/book');
+const seed = require('./modules/seed.js');
+// const { response } = require('express');
+
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'conection error: '));
 db.once('open', () => console.log('mongo database is connected!'));
+
 
 mongoose.connect(process.env.MONGO_DATABASE_CONNECTION,
 // ${process.env.MONGO_DATABASE_CONNECTION}
+
   { useNewUrlParser: true, useUnifiedTopology: true }
 );
 
@@ -31,19 +38,31 @@ app.get('/test', (request, response) => {
 
 app.get('/seed', seed);
 
-app.get('/books', async (req,res) => {
-  let books = await bookModel.find({})  //<---get me everything in this collection. Theres something here, we need you to return it
-  console.log(books)
-  res.send(books)
+app.get('/books', async (req, res) => {
+  try {
+    let bookRequest = {};
+    if (req.query.status) {
+      let { status } = req.query;
+    }
+    let books = await bookModel.find(bookRequest)  //<---get me everything in this collection. Theres something here, we need you to return it
+    console.log(books)
+    res.status(200).send(books);
+  }
+  catch (error) {
+    res.status(500).send('cannot locate books form DB', error.message)
+  }
 });
 
-app.post('/books', async (request,response) => {
+app.post('/books', async (request, response) => {
   try {
     const bookInfo = request.body;
-    const newBook = await bookModel.create(bookInfo)
-    console.log(newBook);
+    // console.log('bookInfo ', bookInfo);
+    const newBook = bookModel(bookInfo)
+    // console.log(newBook);
+    newBook.save();
     response.send(newBook)
-  } catch(error) {
+  } catch (error) {
+    console.log('error: ', error.message);
     response.status(400).send('Book not created')
   }
 })
@@ -63,6 +82,7 @@ app.delete('/books/:id', async (request, response) => {
     response.status(400).send('Unable to delete book.')
   }
 } )
+
 
 
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
