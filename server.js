@@ -42,6 +42,7 @@ app.get('/seed', seed);
 app.get('/books', getBook);
 app.post('/books', postBook);
 app.delete('/books/:id', deleteBook)
+app.put('/books/:id', updateBooks)
 
 async function getBook(req, res) {
   try {
@@ -79,6 +80,19 @@ async function deleteBook(request, response) {
     response.send('Book deleted!')
   } catch (error) {
     response.status(400).send('Unable to delete book.')
+  }
+}
+
+async function updateBooks(request, response) {
+  try {
+    const id = request.params.id;
+    const updateObj = request.body;
+
+    const bookUpdate = await bookModel.findByIdAndUpdate(id, updateObj, {new: true, overwrite: true})
+    console.log(bookUpdate);
+    response.status(200).send(bookUpdate)
+  } catch(error) {
+    response.status(500).send('Unable to perform put.', error.message);
   }
 }
 
