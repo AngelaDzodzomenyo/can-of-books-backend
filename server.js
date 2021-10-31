@@ -51,7 +51,7 @@ async function getBook(req, res) {
       let { status } = req.query;
     }
     let books = await bookModel.find(bookRequest)  //<---get me everything in this collection. Theres something here, we need you to return it
-    console.log(books)
+    // console.log(books)
     res.status(200).send(books);
   }
   catch (error) {
@@ -63,7 +63,7 @@ async function postBook(request, response) {
   try {
     const bookInfo = request.body;
     // console.log('bookInfo ', bookInfo);
-    const newBook = bookModel(bookInfo)
+    const newBook = new bookModel(bookInfo)
     // console.log(newBook);
     newBook.save();
     response.send(newBook)
