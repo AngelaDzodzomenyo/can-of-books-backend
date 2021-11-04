@@ -5,10 +5,14 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 app.use(express.json());
+const jwt = require('jsonwebtoken');
+const jwksClient = require('jwks-rsa');
 
 
 const cors = require('cors');
 app.use(cors());
+
+var client = jwksClient({jwksUri: 'https://dev-iom5cw56.us.auth0.com/.well-known/jwks.json'});
 
 const PORT = process.env.PORT || 3001;
 
@@ -96,6 +100,25 @@ async function updateBooks(request, response) {
   }
 }
 
+
+
+function getKey(header, callback){
+  client.getSigningKey(header.kid, function(err, key) {
+    const signingKey = key.publicKey || key.rsaPublicKey;
+    callback(null, signingKey);
+  });
+}
+
+app.get('/test', (request, response) => {
+  const token = request.headers.authorization.split(' ')[1];
+ 
+  jwt.verify(token, getKey, {}, function(err, user) {
+    if (err){
+      response.send('invalid token');
+    }
+    response.send(user);
+  });
+})
 
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
 
